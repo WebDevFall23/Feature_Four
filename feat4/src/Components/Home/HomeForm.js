@@ -1,7 +1,7 @@
 import React from "react";
 
 /* STATELESS CHILD COMPONENT */
-const MainForm = ({ onChange, onClick }) => {
+const HomeForm = ({ onChange, onClick }) => {
   return (
     <div>
       <hr />
@@ -16,5 +16,5 @@ const MainForm = ({ onChange, onClick }) => {
   );
 };
 
-export default MainForm;
+export default HomeForm;
 

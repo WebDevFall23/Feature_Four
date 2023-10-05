@@ -1,15 +1,15 @@
 import React from "react";
-import MainList from "./MainList";
+import HomeList from "./HomeList";
 
-/* MAIN MODULE WITH STATEFUL PARENT AND STATELESS CHILD */
-const MainModule = () => {
+/* Home MODULE WITH STATEFUL PARENT AND STATELESS CHILD */
+const HomeModule = () => {
   return (
     <div>
-      This is the main module.
-      <MainList />
+      This is the home module.
+      <HomeList />
     </div>
   );
 };
 
-export default MainModule;
+export default HomeModule;
 
