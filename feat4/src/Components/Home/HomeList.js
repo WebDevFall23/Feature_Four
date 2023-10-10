@@ -4,7 +4,7 @@ import {
   getById,
   createPlant,
   removePlant
-} from "/src/Common/Services/PlantService";
+} from "../../Common/Services/PlantService";
 import HomeForm from "./HomeForm";
 
 /* STATEFUL PARENT COMPONENT */
@@ -111,7 +111,7 @@ const HomeList = () => {
         )}
       </div>
       {/* Stateless Child component passing up events from form */}
-      <MainForm onClick={onClickHandler} onChange={onChangeHandler} />
+      <HomeForm onClick={onClickHandler} onChange={onChangeHandler} />
     </div>
   );
 };

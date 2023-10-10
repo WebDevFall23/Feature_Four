@@ -10,7 +10,7 @@ export default function Components() {
         <Route path="/" element={<Home />} />
         <Route path="/library" element={<Library />} />
       </Routes>
-      <Footer />
+      <NavBar />
     </Router>
   );
 }
