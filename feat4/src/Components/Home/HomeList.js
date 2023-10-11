@@ -25,7 +25,7 @@ const HomeList = () => {
 
   // Flags in the state to watch for add/remove updates
   const [add, setAdd] = useState(false);
-  const [remove, setRemove] = useState("");
+ 
 
   // UseEffect that runs when changes
   // are made to the state variables/flags
@@ -38,21 +38,8 @@ const HomeList = () => {
         // Add the newly created plant to the plants array
         setPlants([...plants, newPlant]);
       });
-    }
-
-    // Check if remove state variable is holding an ID
-    if (remove.length > 0) {
-      //Filter the old plants list to take out selected plant
-      const newPlant = plants.filter((plant) => plant.id !== remove);
-      setPlants(newPlant);
-
-      removePlant(remove).then(() => {
-        console.log("Removed plant with ID: ", remove);
-      });
-      // Reset remove state variable
-      setRemove("");
-    }
-  }, [name, plants, add, remove]);
+    } }, [name, plants, add]);
+  
 
   // Handler to handle event passed from child submit button
   const onClickHandler = (e) => {
@@ -84,14 +71,6 @@ const HomeList = () => {
                   <li key={plant.id}>{plant.get("name")}</li>{" "}
                   {/* Button with inline click handler to obtain 
                   instance of plant for remove state variable*/}
-                  <button
-                    onClick={(e) => {
-                      // Set remove variable and trigger re-render
-                      setRemove(plant.id);
-                    }}
-                  >
-                    Delete
-                  </button>
                 </span>
               </div>
             ))}
