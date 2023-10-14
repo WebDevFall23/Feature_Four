@@ -3,17 +3,15 @@ import Parse from "parse";
 
 // CREATE operation - new plant with Name
 export const createUserPlant = (newUserPlant, profile) => {
+  console.log(newUserPlant);
   const UserPlant = Parse.Object.extend("UserPlant");
-  //const Profile = Parse.Object.extend("Profile"); 
-  //const profile = new Profile();
-  // const query = new Parse.Query(Profile);
+
   const userplant = new UserPlant();
-  // const profile = query.get("LI2oGNlMlY");
-  // using setter to UPDATE the object
+
   userplant.set("plantName", newUserPlant.plantName);
-  userplant.set("light", newUserPlant.Light);
-  userplant.set("water", newUserPlant.Water);
-  userplant.set("toxicity", newUserPlant.Toxicity);
+  userplant.set("light", newUserPlant.light);
+  userplant.set("water", newUserPlant.water);
+  userplant.set("toxicity", newUserPlant.toxicity);
   userplant.set("profile", profile);
 
   return userplant.save().then((result) => {

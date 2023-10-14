@@ -64,11 +64,11 @@ const HomeList = () => {
       <div>
         {plants.length > 0 && (
           <ul>
-            {plants.map((plant) => (
+            {plants.map((plant, index) => (
               <div>
                 <span>
                   {/* Using getter for plant Object to display name */}
-                  <li key={plant.id}>{plant.get("name")}</li>{" "}
+                  <li key={`${plant.id}-${index}`}>{plant.get("name")}</li>{" "}
                   {/* Button with inline click handler to obtain 
                   instance of plant for remove state variable*/}
                 </span>
