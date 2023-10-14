@@ -8,14 +8,18 @@ export default function NavBar() {
   const buttonHandlerHome = () => {
     history("/");
   };
-  const buttonHandlerLib = () => {
-    history("/Library");
+  const buttonHandlerProfile = () => {
+    history("/Profile");
+  };
+  const buttonHandlerUserPlant = () => {
+    history("/UserPlant");
   };
   return (
     <section>
         <ul>
             <li><button onClick={buttonHandlerHome}>Home</button></li>
-            <li><button onClick={buttonHandlerLib}>Library</button></li>
+            <li><button onClick={buttonHandlerProfile}>Profile</button></li>
+            <li><button onClick={buttonHandlerUserPlant}>UserPlant</button></li>
         </ul>
     </section>
   );

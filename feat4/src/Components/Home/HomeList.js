@@ -5,7 +5,7 @@ import {
   createPlant,
   removePlant
 } from "../../Common/Services/PlantService";
-import HomeForm from "./HomeForm";
+//import HomeForm from "./HomeForm";
 
 /* STATEFUL PARENT COMPONENT */
 const HomeList = () => {
@@ -27,18 +27,18 @@ const HomeList = () => {
   const [add, setAdd] = useState(false);
  
 
-  // UseEffect that runs when changes
-  // are made to the state variables/flags
-  useEffect(() => {
-    // Check for add flag and make sure name state variable is defined
-    if (name && add) {
-      createPlant(name).then((newPlant) => {
-        setAdd(false);
-        console.log("Creating a new plant(in HomeList.js");
-        // Add the newly created plant to the plants array
-        setPlants([...plants, newPlant]);
-      });
-    } }, [name, plants, add]);
+  // // UseEffect that runs when changes
+  // // are made to the state variables/flags
+  // useEffect(() => {
+  //   // Check for add flag and make sure name state variable is defined
+  //   if (name && add) {
+  //     createPlant(name).then((newPlant) => {
+  //       setAdd(false);
+  //       console.log("Creating a new plant(in HomeList.js");
+  //       // Add the newly created plant to the plants array
+  //       setPlants([...plants, newPlant]);
+  //     });
+  //   } }, [name, plants, add]);
   
 
   // Handler to handle event passed from child submit button
@@ -89,8 +89,6 @@ const HomeList = () => {
           </ul>
         )}
       </div>
-      {/* Stateless Child component passing up events from form */}
-      <HomeForm onClick={onClickHandler} onChange={onChangeHandler} />
     </div>
   );
 };
