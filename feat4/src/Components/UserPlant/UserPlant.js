@@ -1,5 +1,6 @@
 import React from "react";
 import UserPlantList from "./UserPlantList";
+import { Link } from "react-router-dom";
 
 /* Home MODULE WITH STATEFUL PARENT AND STATELESS CHILD */
 const UserPlantModule = () => {
@@ -7,6 +8,10 @@ const UserPlantModule = () => {
     <div>
       This is the UserPlant module.
       <UserPlantList />
+      <br />
+      <Link to="/navbar">
+        <button>Back</button>
+      </Link>
     </div>
   );
 };
