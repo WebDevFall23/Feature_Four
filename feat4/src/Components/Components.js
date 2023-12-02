@@ -8,6 +8,7 @@ import AuthLogin from "./Auth/AuthLogin"
 import AuthRegister from "./Auth/AuthRegister"
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute.js";
 
+
 export default function Components() {
   return (
     <Router>
