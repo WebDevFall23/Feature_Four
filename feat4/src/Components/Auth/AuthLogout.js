@@ -15,7 +15,7 @@ const UserLogOut = () => {
           alert('Success!', 'No user is logged in anymore!');
         }
         // Navigate back to login screen when successfully loggedout
-        navigate('/auth/login');
+        navigate('/home');
         return true;
       })
       .catch((error) => {

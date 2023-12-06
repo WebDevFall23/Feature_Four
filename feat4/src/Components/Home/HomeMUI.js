@@ -21,6 +21,7 @@ import { useNavigate } from "react-router-dom";
 import {
     getAllPlants,
   } from "../../Common/Services/PlantService";
+import UserLogOut from "../Auth/AuthLogout"
 
 const titleTheme = createTheme({
     typography: {
@@ -68,10 +69,10 @@ const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function Album() {
     const defaultTheme = createTheme();
-const [plants, setPlants] = useState([]);
-const [plant, setPlant] = useState([]);
-const [name, setName] = useState();
-
+  const [plants, setPlants] = useState([]);
+  const [plant, setPlant] = useState([]);
+  const [name, setName] = useState();
+  const [userLoggedIn, setUserLoggedIn] = useState(checkUser);
 // UseEffect to run when the page loads to
 // obtain async data and render
 useEffect(() => {
@@ -84,12 +85,15 @@ useEffect(() => {
     <ThemeProvider theme={backgroundTheme}>
       <CssBaseline />
       <ThemeProvider theme={buttonTheme}>
-      <AppBar position="relative" color="purple">
+      <AppBar position="relative" color="purple" >
         <Toolbar>
           <GrassIcon sx={{ mr: 2 }} />
-          <Typography variant="h6" color="white" noWrap>
+          <Typography variant="h6" color="white" sx={{ flexGrow: 1 }} noWrap>
             Home
           </Typography>
+          <ThemeProvider theme={buttonTheme}>
+            <UserLogOut />
+          </ThemeProvider>
         </Toolbar>
       </AppBar>
       </ThemeProvider>
@@ -125,10 +129,10 @@ useEffect(() => {
               justifyContent="center"
             >
             <ThemeProvider theme={buttonTheme}>
-            <Button component={Link} to="/auth/login" variant="contained" color="purple">
+            <Button component={Link} to="/auth/login" variant="contained" color="purple" disabled={userLoggedIn}>
                 Login
             </Button>
-            <Button component={Link} to="/auth/register" variant="contained" color="purple">
+            <Button component={Link} to="/auth/register" variant="contained" color="purple" disabled={userLoggedIn}>
                 Register
             </Button>
             <Button component={Link} to="/profile" variant="contained" color="purple">
@@ -173,7 +177,12 @@ useEffect(() => {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
+                    {/* Link to the plant's individual page at the bottom of the card */}
+                  <ThemeProvider theme={buttonTheme}>
+                  <Link to={`/plant/${plant.id}`}>
+                    View
+                  </Link>
+                  </ThemeProvider>
                   </CardActions>
                 </Card>
               </Grid>
