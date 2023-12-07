@@ -1,48 +1,116 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
+import Parse from 'parse';
 import {
-  getProfile,
-} from "../../Common/Services/ProfileService";
+  getUserPlants
+} from "../../Common/Services/UserPlantService";
 
-/* STATEFUL PARENT COMPONENT */
-const ProfileList = () => {
-  // Variables in the state to hold data
-  const [profile, setProfile] = useState([]);
+const YourComponent = () => {
+  const [editingBio, setEditingBio] = useState(false);
+  const [newBio, setNewBio] = useState('');
+  const [currentUser, setCurrentUser] = useState(null);
+  const [add, setAdd] = useState(true);
+  const [userPlants, setUserPlants] = useState([]);
 
-
-  // UseEffect to run when the page loads to
-  // obtain async data and render
   useEffect(() => {
-    getProfile().then((profile) => {
-      console.log(profile);
-      setProfile(profile);
-    });
-  }, []);
+    const fetchCurrentUser = async () => {
+      try {
+        const user = Parse.User.current();
+        if (user) {
+          setCurrentUser(user);
+          setAdd(false);
+        }
+      } catch (error) {
+        console.error('Error fetching current user:', error);
+      }
+    };
+    
 
-  // Flags in the state to watch for add/remove updates
-  const [add, setAdd] = useState(false);
- 
+    if (currentUser === null && add) {
+      fetchCurrentUser();
+    }
+  }, [currentUser, add]);
+
+  useEffect(() => {
+    // Assuming you have a function to get the current user ID
+    const userId = Parse.User.current();
+    console.log("usertest", userId);
+
+    // Fetch UserPlant data for the current user
+    getUserPlants(userId)
+      .then((plants) => {
+        console.log("testing", userId);
+        setUserPlants(plants);
+      })
+      .catch((error) => {
+        // Handle error
+        console.error("Error getting user plants:", error);
+      });
+  }, [currentUser, add]);
+
+  const handleEditBioClick = () => {
+    setEditingBio(true);
+    setNewBio(currentUser.get('bio') || ''); // Set initial value to current bio
+  };
+
+  const handleSaveBio = () => {
+    currentUser.set('bio', newBio);
+    currentUser.save().then(() => {
+      // After saving the bio, update the currentUser state to reflect the changes
+      setCurrentUser(currentUser.clone());
+      setEditingBio(false);
+    });
+  };
+
+  const handlePlantButtonClick = (plant) => {
+    // Define the behavior when a plant button is clicked
+    // For example, you can update state, navigate to a new page, etc.
+    console.log(`Button clicked for plant: ${plant.get("plantName")}`);
+    // Add your custom logic here
+  };
+
+  console.log("User Plants State:", userPlants);
   return (
     <div>
-      <hr />
-      Profile:
       <div>
-        {profile.length > 0 && (
-          <ul>
-            {profile.map((profile) => (
-              <div>
-                <span>
-                  {/* Using getter for plant Object to display name */}
-                  <li key={profile.id}>Name: {profile.get("firstName")} {profile.get("lastName")} <br />Bio: {profile.get("bio")}</li>{" "}
-                  {/* Button with inline click handler to obtain 
-                  instance of plant for remove state variable*/}
-                </span>
-              </div>
-            ))}
-          </ul>
+        {currentUser && (
+          <div key={currentUser.id}>
+            <p>
+              Name: {currentUser.get('firstName')} {currentUser.get('lastName')}
+              <br />
+              Bio: {currentUser.get('bio')}
+            </p>
+          </div>
         )}
+        {editingBio ? (
+          <div>
+            <textarea value={newBio} onChange={(e) => setNewBio(e.target.value)} />
+            <button onClick={handleSaveBio}>Save Bio</button>
+          </div>
+        ) : (
+          <div>
+            <button onClick={handleEditBioClick}>Edit Bio</button>
+          </div>
+        )}
+     <div>
+        {userPlants.map((plant) => (
+          <button
+            key={plant.id}
+            onClick={() => handlePlantButtonClick(plant)}
+          >
+            {/* Display information about each plant as button text */}
+            Plant Name: {plant.get("plantName")}
+            <br />
+            Light: {plant.get("light")}
+            <br />
+            Water: {plant.get("water")}
+            <br />
+            Toxicity: {plant.get("toxicity")}
+          </button>
+        ))}
+      </div>
       </div>
     </div>
   );
 };
 
-export default ProfileList;
+export default YourComponent;
