@@ -10,6 +10,7 @@ export const createPost = (newPost, plant) => {
     post.set("Content", newPost.content);
     post.set("Plant", newPost.plant);
     post.set("Poster", newPost.poster);
+    post.set("Title", newPost.title);
   
     return post.save().then((result) => {
       // Print the result's name to console log

@@ -23,11 +23,12 @@ const ProfileModule = () => {
             <li><button onClick={buttonHandlerUserPlant}>UserPlant</button></li>
         </ul>
       </section>
+      </div>
       <Link to="/navbar">
-        </div>
         <button>Back</button>
       </Link>
     </div>
+    
   );
 };
 

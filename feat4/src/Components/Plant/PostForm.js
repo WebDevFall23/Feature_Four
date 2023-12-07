@@ -14,9 +14,11 @@ const PostForm = ({ post, onChange, onSubmit }) => {
         /><br />
 
         <label>Post Content:</label>
+        <br />
         <input
           type="content"
           value={post.content}
+          style={{ width: '75%', minHeight: '100px' }}
           onChange={(e) => onChange(e, "content")}
           required
         /><br />

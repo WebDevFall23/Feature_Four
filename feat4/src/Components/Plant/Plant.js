@@ -6,7 +6,7 @@ import {useParams} from "react-router-dom"
 import Parse from "parse";
 import { Link } from "react-router-dom";
 import PostForm from "./PostForm.js"
-
+import NavBar from "../NavBar/NavBar"
 
 const Plant = () => {
   const params = useParams();
@@ -109,8 +109,9 @@ const Plant = () => {
             <p>{post.get("Content")}</p>
           </div>  
         ))}
-        
+        <NavBar />
     </div>
+    
   );
 };
 
