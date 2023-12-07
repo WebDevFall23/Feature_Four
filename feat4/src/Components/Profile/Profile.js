@@ -1,19 +1,30 @@
 import React from "react";
 import ProfileList from "./ProfileList";
-import { Link } from "react-router-dom";
 import UserLogOut from "../Auth/AuthLogout"
+import { Link, useNavigate } from "react-router-dom";
+import UserPlantList from "../UserPlant/UserPlantList";
+
 
 /* Profile MODULE WITH STATEFUL PARENT AND STATELESS CHILD */
 const ProfileModule = () => {
+  const history = useNavigate();
+  
+  const buttonHandlerUserPlant = () => {
+    history("/userplant");
+  };
   return (
     <div>
       <div>
         <UserLogOut/>
-      </div>
-        <h1>This is the Profile module.</h1>
-        <ProfileList />
+        <h2><ProfileList /></h2>
         <br />
-      <Link to="/auth/login">
+        <section>
+        <ul>
+            <li><button onClick={buttonHandlerUserPlant}>UserPlant</button></li>
+        </ul>
+      </section>
+      <Link to="/navbar">
+        </div>
         <button>Back</button>
       </Link>
     </div>

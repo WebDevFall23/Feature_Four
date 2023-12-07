@@ -36,7 +36,6 @@ const UserPlantForm = ({ userPlant, onChange, onSubmit }) => {
             onChange={(e)=>onChange(e,"toxicity")}
             required
           /><br/>
-
         <button type="submit" onSubmit={onSubmit}>Submit</button>
         </form>
       </div>
