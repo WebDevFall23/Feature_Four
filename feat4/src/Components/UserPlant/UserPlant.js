@@ -9,7 +9,7 @@ const UserPlantModule = () => {
       This is the UserPlant module.
       <UserPlantList />
       <br />
-      <Link to="/navbar">
+      <Link to="/profile">
         <button>Back</button>
       </Link>
     </div>
