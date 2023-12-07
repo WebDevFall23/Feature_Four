@@ -1,7 +1,9 @@
 import React from "react";
 import ProfileList from "./ProfileList";
+import UserLogOut from "../Auth/AuthLogout"
 import { Link, useNavigate } from "react-router-dom";
 import UserPlantList from "../UserPlant/UserPlantList";
+
 
 /* Profile MODULE WITH STATEFUL PARENT AND STATELESS CHILD */
 const ProfileModule = () => {
@@ -12,6 +14,8 @@ const ProfileModule = () => {
   };
   return (
     <div>
+      <div>
+        <UserLogOut/>
         <h2><ProfileList /></h2>
         <br />
         <section>
@@ -20,6 +24,7 @@ const ProfileModule = () => {
         </ul>
       </section>
       <Link to="/navbar">
+        </div>
         <button>Back</button>
       </Link>
     </div>
