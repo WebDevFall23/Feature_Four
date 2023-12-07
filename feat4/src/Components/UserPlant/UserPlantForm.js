@@ -1,7 +1,8 @@
 import React from "react";
+import FileUpload from "./FileUpload"; 
 
 /* STATELESS CHILD COMPONENT */
-const UserPlantForm = ({ userPlant, onChange, onSubmit }) => {
+const UserPlantForm = ({ userPlant, onChange, onSubmit, onFileUpload }) => {
   return (
       <div>
         <form onSubmit={onSubmit}>
@@ -36,6 +37,11 @@ const UserPlantForm = ({ userPlant, onChange, onSubmit }) => {
             onChange={(e)=>onChange(e,"toxicity")}
             required
           /><br/>
+
+        <label>Plant Image:</label>
+          <FileUpload onFileUpload={onFileUpload}/>
+        <br/>
+
         <button type="submit" onSubmit={onSubmit}>Submit</button>
         </form>
       </div>

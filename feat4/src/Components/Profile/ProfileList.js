@@ -3,6 +3,7 @@ import Parse from 'parse';
 import {
   getUserPlants
 } from "../../Common/Services/UserPlantService";
+import { Link } from 'react-router-dom';
 
 const YourComponent = () => {
   const [editingBio, setEditingBio] = useState(false);
@@ -97,6 +98,7 @@ const YourComponent = () => {
             key={plant.id}
             onClick={() => handlePlantButtonClick(plant)}
           >
+            <Link to={`/plants/${plant.id}/update`}>
             {/* Display information about each plant as button text */}
             Plant Name: {plant.get("plantName")}
             <br />
@@ -105,6 +107,15 @@ const YourComponent = () => {
             Water: {plant.get("water")}
             <br />
             Toxicity: {plant.get("toxicity")}
+            <br />
+            {plant.get("plantImage") && (
+          <img
+            src={plant.get("plantImage").url()}
+            alt={`Image of ${plant.get("plantName")}`}
+            style={{ maxWidth: '100%', maxHeight: '200px' }}
+          />
+        )}
+        </Link>
           </button>
         ))}
       </div>
