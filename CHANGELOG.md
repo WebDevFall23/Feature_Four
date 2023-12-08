@@ -15,11 +15,8 @@ Added Auth and ProtectedRoutes modules. Protected routes cannot be accessed with
 
 ## 0.3.0 - 2023-12-8
  
-Stylized home page with Material UI
-Logout function
-Public plant profile with user comments
-Personal user profiles
-Personal user plant catalog with picture upload
-User modification of plants stored in personal catalog
+Stylized home page with Material UI. Implemented logout function. Public plant profile with user posts.
+</ br>
+Personal user profiles. Personal user plant catalog with picture upload. User modification of plants stored in personal catalog.
 
 
