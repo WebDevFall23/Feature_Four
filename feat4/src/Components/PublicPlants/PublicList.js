@@ -5,10 +5,9 @@ import {
   createPlant,
   removePlant
 } from "../../Common/Services/PlantService";
-//import HomeForm from "./HomeForm";
 
 /* STATEFUL PARENT COMPONENT */
-const HomeList = () => {
+const PublicPlantList = () => {
   // Variables in the state to hold data
   const [plants, setPlants] = useState([]);
   const [plant, setPlant] = useState([]);
@@ -17,7 +16,8 @@ const HomeList = () => {
   // UseEffect to run when the page loads to
   // obtain async data and render
   useEffect(() => {
-    getAllPlants().then((plants) => {
+    // Need to figure out how to specify what id it is by what plant the user clicks on
+    getById().then((plants) => {
       console.log(plants);
       setPlants(plants);
     });
@@ -26,21 +26,6 @@ const HomeList = () => {
   // Flags in the state to watch for add/remove updates
   const [add, setAdd] = useState(false);
  
-
-  // // UseEffect that runs when changes
-  // // are made to the state variables/flags
-  // useEffect(() => {
-  //   // Check for add flag and make sure name state variable is defined
-  //   if (name && add) {
-  //     createPlant(name).then((newPlant) => {
-  //       setAdd(false);
-  //       console.log("Creating a new plant(in HomeList.js");
-  //       // Add the newly created plant to the plants array
-  //       setPlants([...plants, newPlant]);
-  //     });
-  //   } }, [name, plants, add]);
-  
-
   // Handler to handle event passed from child submit button
   const onClickHandler = (e) => {
     e.preventDefault();
@@ -93,4 +78,4 @@ const HomeList = () => {
   );
 };
 
-export default HomeList;
+export default PublicPlantList;

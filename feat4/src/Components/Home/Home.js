@@ -1,17 +1,12 @@
 import React from "react";
-import HomeList from "./HomeList";
+import HomeMUI from "./HomeMUI";
 import { Link } from "react-router-dom";
-
+import Button from '@mui/material/Button';
 /* Home MODULE WITH STATEFUL PARENT AND STATELESS CHILD */
 const HomeModule = () => {
   return (
     <div>
-      This is the home module.
-      <HomeList />
-      <br />
-      <Link to="/navbar">
-        <button>Back</button>
-      </Link>
+      <HomeMUI />
     </div>
   );
 };
