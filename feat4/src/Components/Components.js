@@ -7,6 +7,8 @@ import AuthModule from "./Auth/Auth.js";
 import AuthLogin from "./Auth/AuthLogin"
 import AuthRegister from "./Auth/AuthRegister"
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute.js";
+import UpdatePlant from "./UpdatePlant/UpdatePlant";
+
 
 export default function Components() {
   return (
@@ -30,6 +32,10 @@ export default function Components() {
         <Route
           path="/navbar"
           element={<ProtectedRoute path="/navbar" element={NavBar} />}
+        />
+        <Route
+          path="plants/:plantId/update"
+          element={<ProtectedRoute path="plants/:plantId/update" element={UpdatePlant} />}
         />
       </Routes>
     </Router>

@@ -56,28 +56,25 @@ function UserPlantList() {
     
       // Handler to track changes to the child input text
       const onChangeHandler = (e, name) => {
-        e.preventDefault();
-        console.log(e.target.value);
-        // Continuously updating name to be added on submit
-        const { value: newValue } = e.target;
-        console.log(newValue);
-
+        const { value, files } = e.target;
+        // If it's a file input, handle the file separately
+        if (name === 'plantImage' && files && files.length > 0) {
+          const file = files[0];
+          // Handle the file upload, you might want to use FileReader to convert it to a URL
+          // and set it in the state
+          onFileUpload(file);
+        } else {
         setNewUserPlant(prevState => ({
             ...prevState,
-            [name]: newValue
+            [name]: value
         }));
+        }
       };
 
   return (
     <div>
       <h1>Add a New Plant</h1>
-      <UserPlantForm userPlant={newUserPlant} onChange={onChangeHandler} onSubmit={onSubmitHandler} onFileUpload={onFileUpload}/>
-      {imageURL && (
-      <div>
-        <h2>Uploaded Image</h2>
-        <img src={imageURL} alt="Uploaded Plant" style={{ maxWidth: '100%', maxHeight: '400px' }} />
-      </div>
-    )}
+      <UserPlantForm userPlant={newUserPlant} onChange={onChangeHandler} onSubmit={onSubmitHandler} onFileUpload={onFileUpload} imageURL={imageURL}/>
     </div>
   );
 }
