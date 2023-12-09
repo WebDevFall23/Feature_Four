@@ -1,8 +1,7 @@
-import React from "react";
-import FileUpload from "./FileUpload"; 
+import React from "react"; 
 
 /* STATELESS CHILD COMPONENT */
-const UserPlantForm = ({ userPlant, onChange, onSubmit, onFileUpload }) => {
+const UserPlantForm = ({ userPlant, onChange, onSubmit, imageURL }) => {
   return (
       <div>
         <form onSubmit={onSubmit}>
@@ -38,9 +37,19 @@ const UserPlantForm = ({ userPlant, onChange, onSubmit, onFileUpload }) => {
             required
           /><br/>
 
-        <label>Plant Image:</label>
-          <FileUpload onFileUpload={onFileUpload}/>
-        <br/>
+        <label>Update Plant Image:</label>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => onChange(e, 'plantImage')} // Update the 'plantImage' attribute in the 'onChange' handler
+        />
+        <br />
+        {imageURL && (
+      <div>
+        <h2>Uploaded Image</h2>
+        <img src={imageURL} alt="Uploaded Plant" style={{ maxWidth: '100%', maxHeight: '400px' }} />
+      </div>
+    )}
 
         <button type="submit" onSubmit={onSubmit}>Submit</button>
         </form>

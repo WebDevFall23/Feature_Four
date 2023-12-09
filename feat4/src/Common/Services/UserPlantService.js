@@ -2,7 +2,7 @@ import Parse from "parse";
 /* SERVICE FOR PARSE SERVER OPERATIONS */
 
 // CREATE operation - new plant with Name
-export const createUserPlant = (newUserPlant, userId, file) => {
+export const createUserPlant = async (newUserPlant, userId, file) => {
   const UserPlant = Parse.Object.extend("UserPlant");
 
   const userplant = new UserPlant();
@@ -69,6 +69,76 @@ const getUserIdString = (userId) => {
     console.error('Invalid userId. Unable to extract user ID.');
     throw new Error('Invalid userId');
   }
+};
+
+export const getPlantById = (plantId) => {
+  const Plant = Parse.Object.extend('UserPlant');
+  const query = new Parse.Query(Plant);
+
+  return query.get(plantId)
+    .then((plant) => plant.toJSON())
+    .catch((error) => {
+      console.error('Error fetching plant by ID:', error);
+      throw error;
+    });
+};
+
+// Function to update plant data
+export const updatePlant = (updatedPlant, userId, file) => {
+  const Plant = Parse.Object.extend('UserPlant');
+  const query = new Parse.Query(Plant);
+  console.log('plant id', updatedPlant.objectId);
+
+  return query
+    .get(updatedPlant.objectId)
+    .then((plant) => {
+      // Update plant fields
+      plant.set('plantName', updatedPlant.plantName);
+      plant.set('light', updatedPlant.light);
+      plant.set('water', updatedPlant.water);
+      plant.set('toxicity', updatedPlant.toxicity);
+
+      // Check if a new file is provided
+      if (file && file.type) {
+        const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+        // Validate file type
+        if (allowedImageTypes.includes(file.type)) {
+          const userIdString = getUserIdString(userId);
+          const originalFilename = file.name;
+          const sanitizedFilename = originalFilename.replace(/[^a-zA-Z0-9_.]/g, '_');
+          const fileName = `${userIdString}_${Date.now()}_${sanitizedFilename}`;
+
+          const parseFile = new Parse.File(fileName, file);
+
+          // Save the new file
+          return parseFile.save().then(() => {
+            // Attach the file to the UserPlant object
+            plant.set('plantImage', parseFile);
+
+            // Save the updated UserPlant object
+            return plant.save().then((result) => {
+              console.log('Plant updated successfully:', result);
+              return result;
+            });
+          });
+        } else {
+          // Handle invalid file type
+          console.error('Invalid file type. Please upload a valid image.');
+          throw new Error('Invalid file type');
+        }
+      } else {
+        // If no new file, simply save the updated UserPlant object
+        return plant.save().then((result) => {
+          console.log('Plant updated successfully:', result);
+          return result;
+        });
+      }
+    })
+    .catch((error) => {
+      console.error('Error updating plant:', error);
+      throw error;
+    });
 };
 
 
