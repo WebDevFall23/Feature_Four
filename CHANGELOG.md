@@ -17,6 +17,6 @@ Added Auth and ProtectedRoutes modules. Protected routes cannot be accessed with
  
 Stylized home page with Material UI. Implemented logout function. Public plant profile with user posts.
 <br>
-Styled personal user profiles. Styled personal user plant catalog with picture upload. Style user modification of plants stored in personal catalog.
+Style and function for personal user profiles. Style and function for personal user plant catalog with picture upload. Style and function for user modification of plants stored in personal catalog.
 
 
