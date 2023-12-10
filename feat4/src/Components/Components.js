@@ -10,7 +10,7 @@ import AuthRegister from "./Auth/AuthRegister"
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute.js";
 import UpdatePlant from "./UpdatePlant/UpdatePlant";
 import Plant from "./Plant/Plant.js"
-import UpdateProfile from "./UpdateProfile/updateProfile";
+import UpdateProfile from "./UpdateProfile/UpdateProfile";
 
 export default function Components() {
   return (
