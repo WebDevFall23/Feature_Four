@@ -2,43 +2,40 @@ import React, { useEffect, useState } from "react";
 import {
     createUserPlant
   } from "../../Common/Services/UserPlantService";
-  import UserPlantForm from "./UserPlantForm";
-  import Parse from 'parse';
-  import FileUpload from "./FileUpload";
+import UserPlantForm from "./UserPlantForm";
+import Parse from 'parse';
+import "./UserPlantDesign.css";
 
 
 
 function UserPlantList() {
     const [newUserPlant, setNewUserPlant] = useState({plantName: "", light: "", water: "", toxicity: ""});
-
     const [add, setAdd] = useState(false);
     const [file, setFile] = useState(null);
     const [imageURL, setImageURL] = useState(null);
 
-    const onFileUpload = (uploadedFile) => {
+    //handles image uploads
+    const onImageUpload = (uploadedFile) => {
       setFile(uploadedFile);
-
-      // Display the image immediately after upload
       if (currentUser) {
-        // Handle the image upload separately if needed
-        // For example, set the imageURL state here or handle it differently
+        //need the image url for parse
         const imageUrl = URL.createObjectURL(uploadedFile);
         setImageURL(imageUrl);
       }
     };
 
+    //needs current user so the plant can belong to that user
     const currentUser = Parse.User.current();
+    //when submitting
     const onSubmitHandler = (e) => {
-        console.log("on-submit", newUserPlant);
         e.preventDefault();
+        //checks that the plant and user are valid
         if (newUserPlant && currentUser) {
           const userId = currentUser;
-          console.log("User ID:", userId);
-          console.log("file out here", file);
+          //sets the info to parse for UserPlant
           createUserPlant(newUserPlant, userId, file)
             .then((UserPlantCreated) => {
                 setAdd(false);
-                console.log("Creating a new plant");
                 setNewUserPlant({
                   plantName: "",
                   light: "",
@@ -46,35 +43,33 @@ function UserPlantList() {
                   toxicity: ""
                 });
                 setImageURL(null);
-                // Add the newly created plant to the plants arr
                 alert("Plant created successfully!");
               });
         }
-        // re-render list with new plant
         setAdd(true);
     };
     
-      // Handler to track changes to the child input text
-      const onChangeHandler = (e, name) => {
+    //takes care of the user input (gets what the user is typing for the fields)
+    const onChangeHandler = (e, name) => {
         const { value, files } = e.target;
-        // If it's a file input, handle the file separately
+        //if an image has been uploaded then allow it to be handled as a file
         if (name === 'plantImage' && files && files.length > 0) {
           const file = files[0];
-          // Handle the file upload, you might want to use FileReader to convert it to a URL
-          // and set it in the state
-          onFileUpload(file);
+          onImageUpload(file);
         } else {
+          //otherwise checks the other fields
         setNewUserPlant(prevState => ({
             ...prevState,
             [name]: value
         }));
         }
-      };
+    };
 
+  //what is displayed on the page takes in the form to create a new plant
   return (
     <div>
-      <h1>Add a New Plant</h1>
-      <UserPlantForm userPlant={newUserPlant} onChange={onChangeHandler} onSubmit={onSubmitHandler} onFileUpload={onFileUpload} imageURL={imageURL}/>
+      <h1 className="new-plant-title">Add a New Plant</h1>
+      <UserPlantForm userPlant={newUserPlant} onChange={onChangeHandler} onSubmit={onSubmitHandler} onImageUpload={onImageUpload} imageURL={imageURL}/>
     </div>
   );
 }

@@ -10,6 +10,7 @@ import AuthRegister from "./Auth/AuthRegister"
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute.js";
 import UpdatePlant from "./UpdatePlant/UpdatePlant";
 import Plant from "./Plant/Plant.js"
+import UpdateProfile from "./UpdateProfile/updateProfile";
 
 export default function Components() {
   return (
@@ -24,6 +25,10 @@ export default function Components() {
         <Route
           path="/profile"
           element={<ProtectedRoute path="/profile" element={Profile} />}
+        />
+        <Route
+          path="/updateprofile"
+          element={<ProtectedRoute path="/updateprofile" element={UpdateProfile} />}
         />
         <Route
           path="/userplant"

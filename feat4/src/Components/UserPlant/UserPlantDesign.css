@@ -1,0 +1,71 @@
+/* UserPlantDesign.css */
+
+/* form to create plant */
+.user-plant-form {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    flex-direction: column;
+  }
+  
+  /* group all the input values */
+  .form-group {
+    text-align: left;
+    margin-bottom: 15px;
+  }
+  
+  /* labels */
+  .user-plant-form label {
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: block; 
+    color: #94A684; 
+  }
+  
+  /* input values */
+  .user-plant-form input {
+    padding: 10px;
+    border-radius: 8px;
+    width: 300px;
+    box-sizing: border-box; 
+    font-size: 14px;
+    border: 1px solid #94A684; 
+  }
+  
+  /* create button  */
+  .user-plant-form button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: #94A684; 
+    color: #fff;
+  }
+  
+  /* format image */
+  .user-plant-form img {
+    max-height: 400px;
+    margin-top: 20px;
+    max-width: 100%;
+  }
+  
+  /* title of page */
+  .new-plant-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #94A684; 
+  }
+
+  /* back button  */
+  .back-button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-left: 20px; 
+    background-color: #94A684; 
+    color: #fff; 
+  }

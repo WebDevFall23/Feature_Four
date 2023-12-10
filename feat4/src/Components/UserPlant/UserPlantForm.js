@@ -1,59 +1,74 @@
 import React from "react"; 
+import "./UserPlantDesign.css";
 
-/* STATELESS CHILD COMPONENT */
 const UserPlantForm = ({ userPlant, onChange, onSubmit, imageURL }) => {
+  //form to create plant with the fields to fill in
   return (
-      <div>
-        <form onSubmit={onSubmit}>
+    <div className="user-plant-form">
+      <form onSubmit={onSubmit}>
+        <div className="form-group">
           <label>Plant Name:</label>
           <input
             type="plantName"
             value={userPlant.plantName}
-            onChange={(e)=>onChange(e,"plantName")}
+            onChange={(e) => onChange(e, "plantName")}
             required
-          /><br/>
+          />
+        </div>
 
+        <div className="form-group">
           <label>Light Requirement:</label>
           <input
             type="light"
             value={userPlant.light}
-            onChange={(e)=>onChange(e,"light")}
+            onChange={(e) => onChange(e, "light")}
             required
-          /><br/>
+          />
+        </div>
 
+        <div className="form-group">
           <label>Watering Frequency:</label>
           <input
             type="water"
             value={userPlant.water}
-            onChange={(e)=>onChange(e,"water")}
+            onChange={(e) => onChange(e, "water")}
             required
-          /><br/>
+          />
+        </div>
 
-        <label>Toxicity:</label>
+        <div className="form-group">
+          <label>Toxicity:</label>
           <input
             type="toxicity"
             value={userPlant.toxicity}
-            onChange={(e)=>onChange(e,"toxicity")}
+            onChange={(e) => onChange(e, "toxicity")}
             required
-          /><br/>
+          />
+        </div>
 
-        <label>Update Plant Image:</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => onChange(e, 'plantImage')} // Update the 'plantImage' attribute in the 'onChange' handler
-        />
-        <br />
+        <div className="form-group">
+          <label>Update Plant Image:</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => onChange(e, "plantImage")}
+          />
+        </div>
+
         {imageURL && (
-      <div>
-        <h2>Uploaded Image</h2>
-        <img src={imageURL} alt="Uploaded Plant" style={{ maxWidth: '100%', maxHeight: '400px' }} />
-      </div>
-    )}
+          <div>
+            <h2>Uploaded Image</h2>
+            <img
+              src={imageURL}
+              alt="Uploaded Plant"
+              style={{ maxWidth: "100%", maxHeight: "400px" }}
+            />
+          </div>
+        )}
 
-        <button type="submit" onSubmit={onSubmit}>Submit</button>
-        </form>
-      </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   );
 };
 

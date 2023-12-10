@@ -4,6 +4,7 @@ import {
     getPlantById, updatePlant
   } from "../../Common/Services/UserPlantService";
 import Parse from 'parse';
+import "./UpdatePlantDesign.css"
 
 function UpdatePlantList() {
   const { plantId } = useParams();
@@ -11,14 +12,11 @@ function UpdatePlantList() {
   const [updatedPlant, setUpdatedPlant] = useState({});
   const [file, setFile] = useState(null);
 
-  useEffect(() => {
-    // Fetch the plant data by ID and set it to the state
+  //get the informaiton of the existing plant by the id used to reroute to this page
+  useEffect(() => { 
     getPlantById(plantId).then((plant) => {
-      console.log("Type of plantImage:", typeof plant.plantImage);
-      console.log("Plant data:", plant);
+      //if there is an image then set the image as well else just do the plant info
       if (plant.plantImage && plant.plantImage.url) {
-        // Set the URL of the plant image to display it
-        console.log("Image URL:", plant.plantImage.url);
         setUpdatedPlant({ ...plant, plantImage: plant.plantImage.url });
       } else {
         console.log("No valid plantImage URL found:", plant.plantImage);
@@ -27,28 +25,26 @@ function UpdatePlantList() {
     });
   }, [plantId]);
 
+  //has to get the current user for the user field in userPlants
   const currentUser = Parse.User.current();
   const onSubmit = (e) => {
     e.preventDefault();
-    // Call your updatePlant function to update the plant information
-    console.log(updatedPlant)
     const userId = currentUser;
+    //takes in the new info and updates the plant when user submits
     updatePlant(updatedPlant, userId, file).then(() => {
       alert('Plant information updated successfully!');
       history('/profile');
     });
   };
 
+  //keeps track of the user inputs
   const onChange = (e, name) => {
     const { value, files } = e.target;
-    // If it's a file input, handle the file separately
+    //checks if there is a file so it can be handled as a file -image
     if (name === 'plantImage' && files && files.length > 0) {
       const file = files[0];
-      // Handle the file upload, you might want to use FileReader to convert it to a URL
-      // and set it in the state
-      handleFileUpload(file);
+      handleImageUpload(file);
     } else {
-      // For other input fields, update the state normally
       setUpdatedPlant((prev) => ({
         ...prev,
         [name]: value,
@@ -56,27 +52,22 @@ function UpdatePlantList() {
     }
   };
 
-  const handleFileUpload = (file) => {
+  //handles the images
+  const handleImageUpload = (file) => {
     setFile(file);
-
-    // Display the image immediately after upload
-
-      // Handle the image upload separately if needed
-      // For example, set the imageURL state here or handle it differently
+      //needs the url as a property for the image
       const imageUrl = URL.createObjectURL(file);
-
-      // Set the updatedPlant state with the new image URL
+      //update the plant with this image
       setUpdatedPlant((prev) => ({
         ...prev,
         plantImage: imageUrl,
-      }));
-  
+      })); 
   };
   
-
   return (
-    <div>
-      <h1>Update Plant Information</h1>
+    <div className="update-plant-form"> 
+    {/* Everything inisde the form prefilled  */}
+      <h1>Update Plant Information</h1> 
       <form onSubmit={onSubmit}>
         <label>Plant Name:</label>
         <input
@@ -121,16 +112,13 @@ function UpdatePlantList() {
           </div>
         )}
 
-        {/* Input for updating the plant image */}
         <label>Update Plant Image:</label>
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => onChange(e, 'plantImage')} // Update the 'plantImage' attribute in the 'onChange' handler
+          onChange={(e) => onChange(e, 'plantImage')} 
         />
         <br />
-
-        {/* Add other input fields for water, toxicity, etc. */}
 
         <button type="submit">Update Plant</button>
       </form>

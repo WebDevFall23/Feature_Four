@@ -1,43 +1,43 @@
 import Parse from "parse";
-/* SERVICE FOR PARSE SERVER OPERATIONS */
 
-// CREATE operation - new plant with Name
 export const createUserPlant = async (newUserPlant, userId, file) => {
   const UserPlant = Parse.Object.extend("UserPlant");
 
   const userplant = new UserPlant();
-
+  //set all the valuse to create a new plant
   userplant.set("plantName", newUserPlant.plantName);
   userplant.set("light", newUserPlant.light);
   userplant.set("water", newUserPlant.water);
   userplant.set("toxicity", newUserPlant.toxicity);
   userplant.set("user", userId);
 
+  //which images are allowed
   const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  //gets the user id
   const userIdString = getUserIdString(userId);
 
   if (file && allowedImageTypes.includes(file.type)) {
     const originalFilename = file.name;
+    //cleans the name of the file so that it's accesptable by parse and can keep track of images that belong to the user
     const sanitizedFilename = originalFilename.replace(/[^a-zA-Z0-9_.]/g, '_');
     const fileName = `${userIdString}_${Date.now()}_${sanitizedFilename}`;
 
     const parseFile = new Parse.File(fileName, file);
 
     return parseFile.save().then(() => {
-      // Attach the file to the UserPlant object
+      //set the image as well
       userplant.set('plantImage', parseFile);
-
-      // Save the UserPlant object
       return userplant.save().then((result) => {
         console.log("Plant created successfully:", result);
         return result;
       });
     }).catch(error => {
+      //error handling
       console.error('Error saving file:', error);
       throw error;
     });
   } else {
-    // Handle invalid file type
+    // Handle invalid files
     console.error('Invalid file type. Please upload a valid image.');
     throw new Error('Invalid file type');
   }
@@ -46,23 +46,22 @@ export const createUserPlant = async (newUserPlant, userId, file) => {
 export const getUserPlants = async (userId) => {
   const UserPlant = Parse.Object.extend("UserPlant");
   const query = new Parse.Query(UserPlant);
-  console.log("Query Parameters:", query.toJSON());
-
-  // Set up query to retrieve UserPlant data for the current user
+  //gets all the plants with the same id
   query.equalTo("user", userId);
-  console.log("useridinservice", userId);
+  //returns these plants
   return query.find()
     .then((userPlants) => {
-      console.log("userplantinservecie", userPlants);
       return userPlants;
     })
     .catch((error) => {
+      //error handling
       console.error("Error retrieving user plants:", error);
       throw error;
     });
 };
 
 const getUserIdString = (userId) => {
+  //retrieves the user id
   if (userId && userId.className === '_User' && userId.id) {
     return userId.id;
   } else {
@@ -71,10 +70,11 @@ const getUserIdString = (userId) => {
   }
 };
 
+//gets a plant by it's id so id is passed in
 export const getPlantById = (plantId) => {
   const Plant = Parse.Object.extend('UserPlant');
   const query = new Parse.Query(Plant);
-
+  //gets the plant
   return query.get(plantId)
     .then((plant) => plant.toJSON())
     .catch((error) => {
@@ -83,54 +83,48 @@ export const getPlantById = (plantId) => {
     });
 };
 
-// Function to update plant data
+
 export const updatePlant = (updatedPlant, userId, file) => {
   const Plant = Parse.Object.extend('UserPlant');
   const query = new Parse.Query(Plant);
-  console.log('plant id', updatedPlant.objectId);
-
+  
+  //gets the info about the updated plant values, the new image, and the user making this mdoification
+  //sets the new values
   return query
     .get(updatedPlant.objectId)
     .then((plant) => {
-      // Update plant fields
+
       plant.set('plantName', updatedPlant.plantName);
       plant.set('light', updatedPlant.light);
       plant.set('water', updatedPlant.water);
       plant.set('toxicity', updatedPlant.toxicity);
 
-      // Check if a new file is provided
+      //handles the images same as before 
       if (file && file.type) {
         const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
 
-        // Validate file type
         if (allowedImageTypes.includes(file.type)) {
           const userIdString = getUserIdString(userId);
           const originalFilename = file.name;
+          //cleaning up the file name
           const sanitizedFilename = originalFilename.replace(/[^a-zA-Z0-9_.]/g, '_');
           const fileName = `${userIdString}_${Date.now()}_${sanitizedFilename}`;
 
           const parseFile = new Parse.File(fileName, file);
-
-          // Save the new file
+          //set the image
           return parseFile.save().then(() => {
-            // Attach the file to the UserPlant object
             plant.set('plantImage', parseFile);
-
-            // Save the updated UserPlant object
+            //save it
             return plant.save().then((result) => {
-              console.log('Plant updated successfully:', result);
               return result;
             });
           });
         } else {
-          // Handle invalid file type
-          console.error('Invalid file type. Please upload a valid image.');
+          //error handling
           throw new Error('Invalid file type');
         }
       } else {
-        // If no new file, simply save the updated UserPlant object
         return plant.save().then((result) => {
-          console.log('Plant updated successfully:', result);
           return result;
         });
       }
@@ -138,6 +132,26 @@ export const updatePlant = (updatedPlant, userId, file) => {
     .catch((error) => {
       console.error('Error updating plant:', error);
       throw error;
+    });
+};
+
+//removes a plant from user plants
+export const removePlant = (plantId) => {
+  const PlantObject = Parse.Object.extend('UserPlant'); 
+  const plantQuery = new Parse.Query(PlantObject);
+  //gets the id and removes it from parse
+  return plantQuery
+    .get(plantId)
+    .then((plant) => {
+      return plant.destroy();
+    })
+    .then(() => {
+      console.log(`${plantId} removed successfully.`);
+    })
+    .catch((error) => {
+      //error handling
+      console.error(`Error removing plant with ID ${plantId}:`, error);
+      throw error; 
     });
 };
 
