@@ -1,14 +1,13 @@
 import React from "react";
-import UpdatePlantList from "./UpdatePlantList";
+import UpdateProfileList from "./UpdateProfileList";
 import { Link } from "react-router-dom";
-import "./UpdatePlantDesign.css"
+import './UpdateProfileDesign.css';
 
-
-//page for updating the plant info
-const UpdatePlant = () => {
+/* Update profile page */
+const UpdateProfile = () => {
   return (
     <div>
-      <UpdatePlantList />
+      <UpdateProfileList />
       <br />
       <Link to="/profile">
         <button className="back-button">Back</button>
@@ -17,4 +16,4 @@ const UpdatePlant = () => {
   );
 };
 
-export default UpdatePlant;
+export default UpdateProfile;

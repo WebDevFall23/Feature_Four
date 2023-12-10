@@ -1,0 +1,33 @@
+/* ProfileNavDesign.css */
+/* Design for the navigation part that is in the profile file */
+
+/* plant creating button */
+.add-plant-button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-top: 10px; 
+    float: right; 
+    margin-right: 20px; 
+    margin-bottom: 20px; 
+    background-color: #94A684; 
+    color: #fff; 
+  }
+  
+  /* back button */
+  .back-button {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-left: 20px; 
+    margin-bottom: 20px; 
+    background-color: #94A684; 
+    color: #fff; 
+  }
+  
+
+  

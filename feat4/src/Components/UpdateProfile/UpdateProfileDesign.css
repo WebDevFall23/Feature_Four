@@ -1,0 +1,58 @@
+/* UpdateProfileDesign.css */
+
+/* the form  */
+.update-profile {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  /* h1 */
+  .update-profile h1 {
+    color: #94A684;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* label */
+  .update-profile label {
+    color: #94A684; 
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: block; 
+  }
+  
+  /* input and text */
+  .update-profile input,
+  .update-profile textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #94A684; 
+    border-radius: 8px;
+    width: 300px;
+    box-sizing: border-box; 
+    margin-bottom: 10px; 
+  }
+  
+  /* update button */
+  .update-profile button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #94A684; 
+    color: #fff; 
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+
+  /* back button */
+  .back-button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #94A684; 
+    color: #fff; 
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    margin-left: 20px; 
+  }
+  

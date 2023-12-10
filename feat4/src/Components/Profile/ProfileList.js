@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import Parse from 'parse';
 import {
-  getUserPlants
+  getUserPlants, removePlant
 } from "../../Common/Services/UserPlantService";
 import { Link } from 'react-router-dom';
+import "./ProfileDesign.css"
 
 
-const YourComponent = () => {
-  const [editingBio, setEditingBio] = useState(false);
-  const [newBio, setNewBio] = useState('');
+const ProfileList = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [add, setAdd] = useState(true);
   const [userPlants, setUserPlants] = useState([]);
 
+  //gets the current user so that is can be displayed in the profile
+  //triggered with a new current user
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
@@ -25,104 +26,111 @@ const YourComponent = () => {
         console.error('Error fetching current user:', error);
       }
     };
-    
-
     if (currentUser === null && add) {
       fetchCurrentUser();
     }
   }, [currentUser, add]);
 
-  useEffect(() => {
-    // Assuming you have a function to get the current user ID
-    const userId = Parse.User.current();
-    console.log("usertest", userId);
 
-    // Fetch UserPlant data for the current user
+  //trigged when there is a differnt user
+  useEffect(() => {
+
+    //gets the current user
+    const userId = Parse.User.current();
+
+    //get the plants based on the current user id
     getUserPlants(userId)
       .then((plants) => {
-        console.log("testing", userId);
+        console.log("testing", userId); 
+        //set the plants that have been retrieved
         setUserPlants(plants);
       })
       .catch((error) => {
         // Handle error
         console.error("Error getting user plants:", error);
       });
-  }, [currentUser, add]);
+  }, [currentUser]);
 
-  const handleEditBioClick = () => {
-    setEditingBio(true);
-    setNewBio(currentUser.get('bio') || ''); // Set initial value to current bio
+  //removes a plant
+  const handleRemovePlant = (plantId) => {
+    
+     //calls the service that has the function to remove the plant based of the plant id
+    removePlant(plantId)
+      .then(() => {
+        setUserPlants((prevUserPlants) =>
+          prevUserPlants.filter((plant) => plant.id !== plantId)
+        );
+      })
+      .catch((error) => {
+        console.error(`Error removing plant with ID ${plantId}:`, error);
+      });
   };
 
-  const handleSaveBio = () => {
-    currentUser.set('bio', newBio);
-    currentUser.save().then(() => {
-      // After saving the bio, update the currentUser state to reflect the changes
-      setCurrentUser(currentUser.clone());
-      setEditingBio(false);
-    });
-  };
-
+  //allows for the plant info to be in the button that can be clicked to navigate to its edit page
   const handlePlantButtonClick = (plant) => {
-    // Define the behavior when a plant button is clicked
-    // For example, you can update state, navigate to a new page, etc.
     console.log(`Button clicked for plant: ${plant.get("plantName")}`);
-    // Add your custom logic here
   };
 
-  console.log("User Plants State:", userPlants);
   return (
-    <div>
-      <div>
+    <div className="your-component">
+      <div className="user-info">
+        {/* User info not in loop for plants*/}
         {currentUser && (
           <div key={currentUser.id}>
-            <p>
-              Name: {currentUser.get('firstName')} {currentUser.get('lastName')}
-              <br />
-              Bio: {currentUser.get('bio')}
-            </p>
+            <h1 className="user-name">
+              {currentUser.get('firstName')} {currentUser.get('lastName')}
+            </h1>
+            <p className="bio"> Bio: {currentUser.get('bio')}</p>
           </div>
         )}
-        {editingBio ? (
-          <div>
-            <textarea value={newBio} onChange={(e) => setNewBio(e.target.value)} />
-            <button onClick={handleSaveBio}>Save Bio</button>
-          </div>
-        ) : (
-          <div>
-            <button onClick={handleEditBioClick}>Edit Bio</button>
-          </div>
-        )}
-     <div>
-        {userPlants.map((plant) => (
-          <button
-            key={plant.id}
-            onClick={() => handlePlantButtonClick(plant)}
-          >
-            <Link to={`/plants/${plant.id}/update`}>
-            {/* Display information about each plant as button text */}
-            Plant Name: {plant.get("plantName")}
-            <br />
-            Light: {plant.get("light")}
-            <br />
-            Water: {plant.get("water")}
-            <br />
-            Toxicity: {plant.get("toxicity")}
-            <br />
-            {plant.get("plantImage") && (
-          <img
-            src={plant.get("plantImage").url()}
-            alt={`Image of ${plant.get("plantName")}`}
-            style={{ maxWidth: '100%', maxHeight: '200px' }}
-          />
-        )}
+
+        {/* User info update button not in loop for plants */}
+        <Link to="/updateprofile">
+          <button className="update-profile-button">Update Profile</button>
         </Link>
-          </button>
-        ))}
-      </div>
+          {/* Display all plants for user */}
+        <div className="plant-buttons-container">
+          {userPlants.map((plant) => (
+            <div key={plant.id} className="plant-button-container">
+              <button
+                onClick={() => handlePlantButtonClick(plant)}
+                className="plant-button"
+              >
+                <Link to={`/plants/${plant.id}/update`} className="plant-button-link">
+                  Plant Name: {plant.get("plantName")}
+                  <br />
+                  Light: {plant.get("light")}
+                  <br />
+                  Water: {plant.get("water")}
+                  <br />
+                  Toxicity: {plant.get("toxicity")}
+                  <br />
+                  {plant.get("plantImage") && (
+                    <img
+                      src={plant.get("plantImage").url()}
+                      alt={`Image of ${plant.get("plantName")}`}
+                      className="plant-image"
+                    />
+                  )}
+                </Link>
+              </button>
+              
+              {/* Remove the plant */}
+              <div>
+                <button
+                  onClick={() => handleRemovePlant(plant.id)}
+                  className="remove-plant-button"
+                >
+                  Remove Plant
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
-export default YourComponent;
+
+export default ProfileList;

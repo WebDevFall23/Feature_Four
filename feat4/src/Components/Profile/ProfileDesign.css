@@ -1,0 +1,82 @@
+/* Style for the profile page */
+ 
+/* background */
+.your-component {
+  padding: 20px;
+  background-color: #EEE7DA; 
+}
+
+/*design outside of plant loop for user info*/
+.user-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Sytle for name */
+.user-name {
+  color: #333; 
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* bio */
+.bio {
+  color: #555;
+  font-size: 16px;
+}
+
+/* update profile button */
+.update-profile-button {
+  margin-bottom: 20px; 
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  background-color: #94A684; 
+  color: #fff; 
+}
+
+/* all the plant info */
+.plant-buttons-container {
+  justify-content: center;
+  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* button containing plant info */
+.plant-button {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px; 
+  background-color: #94A684; 
+  color: #fff; 
+}
+
+/* style of the link */
+.plant-button-link {
+  text-decoration: none;
+  color: #fff; 
+}
+
+/* size if image */
+.plant-image {
+  max-height: 200px;
+  max-width: 100%;
+}
+
+/* the remove a plant button */
+.remove-plant-button {
+  padding: 5px;
+  font-size: 12px;
+  border-radius: 5px;
+  margin-top: 10px;
+  background-color: #860A35; 
+  color: #fff; 
+  border: none;
+  cursor: pointer; 
+}
+
